@@ -23,7 +23,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=
 
 Finally, start the development server using the following command:
 
-`npm run dev`e
+`npm run dev`
 
 ## Contributing
 
