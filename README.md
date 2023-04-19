@@ -6,22 +6,24 @@ FloralFlow is a progressive web app designed to help retail floral department ma
 
 To run FloralFlow locally, clone this repository to your local machine and install the required dependencies using npm:
 
-git clone https://github.com/your-username/floralflow.git
-cd floralflow
-npm install
+`git clone https://github.com/your-username/floralflow.git`
+`cd floralflow`
+`npm install`
 
 Next, set up a Firebase project and services as described in the `firebase-setup.md` file. Then, create a `.env.local` file in the root directory of the app and set the following environment variables to your Firebase project credentials:
 
+```
 NEXT_PUBLIC_FIREBASE_API_KEY=
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
+```
 
 Finally, start the development server using the following command:
 
-npm run dev
+`npm run dev`
 
 ## Contributing
 
