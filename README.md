@@ -1,5 +1,11 @@
 # FloralFlow
 
+## MVP Roadmap
+
+### Phase 1:
+FloralFlow is a Next.js-based web application for florists to manage inventory using CRUD operations, with Firebase as the backend database. It features login, dashboard, and inventory management pages, and is scalable for future expansion.
+
+### Phase 2: 
 FloralFlow is a progressive web app designed to help retail floral department managers and employees manage inventory, reduce waste and paper usage, and streamline their workflows through effective process management. The app allows users to create and manage their own SOPs, define steps in a process, assign roles and responsibilities, set deadlines, and collaborate with team members. FloralFlow also provides access to a library of pre-made SOPs, notifications and reminders, version control, analytics and reports, and integration with other tools.
 
 ## Installation
