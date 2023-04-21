@@ -1,0 +1,27 @@
+/* Header.module.css */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #77dd77;
+  width: 100%;
+}
+
+.logo {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  font-family: "Lato", sans-serif;
+  font-size: 1rem;
+  color: #ffffff;
+  text-decoration: none;
+}
