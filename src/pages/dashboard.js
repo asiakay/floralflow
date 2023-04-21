@@ -4,7 +4,7 @@ import { useUser } from '../contexts/UserProvider';
 import { Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import styles from '@/styles/Dashboard.module.css';
 import Head from 'next/head'
-import AddItemForm from '../components/AddItemForm';
+//import AddItemForm from '../components/AddItemForm';
 import Image from 'next/image';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -25,7 +25,7 @@ useEffect(() => {
     setItems(itemsList);
   };
   fetchItems(items);
-}, [setItems]);
+}, [items]);
 
 
 
@@ -34,6 +34,7 @@ useEffect(() => {
   if (!loading && !user) {
     router.push('/login');
   }
+
 
   if (loading) {
     return <div>Loading...</div>;
