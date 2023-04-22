@@ -1,4 +1,4 @@
-import { useAnalytics } from '../hooks/useAnalytics';
+//import { useAnalytics } from '../hooks/useAnalytics';
 
 import '@/styles/globals.css'
 import '@/styles/reset.css'; // Import the reset.css file
@@ -8,7 +8,7 @@ import { Container } from 'react-bootstrap';
 import { UserProvider } from '../contexts/UserProvider';
 import Layout from '../components/Layout';
 function App({ Component, pageProps }) {
-  useAnalytics();
+ // useAnalytics();
 
 /*   const user = {
     name: 'Asia Kowalski',

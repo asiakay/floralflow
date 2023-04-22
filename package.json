@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/stripe-js": "^1.52.1",
     "bootstrap": "^5.2.3",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
@@ -17,5 +19,21 @@
     "react": "18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "18.2.0"
-  }
+  },
+  "description": "## MVP Roadmap",
+  "main": "next.config.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asiakay/floralflow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asiakay/floralflow/issues"
+  },
+  "homepage": "https://github.com/asiakay/floralflow#readme"
 }

@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
+import { Container, Row, Col, ButtonGroup, Button, TabContainer } from 'react-bootstrap';
 import Head from 'next/head'
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithGoogle } from '../lib/auth';
+//import Logo from '../components/Logo';
+
 import { auth } from '../lib/firebase';
 import { useRouter } from 'next/router';
 import styles from '../styles/Login.module.css';
-
+import Logo from '../public/logo.png';
 const LoginPage = () => {
+  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -22,6 +27,16 @@ const LoginPage = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    const { user, token, error } = await signInWithGoogle();
+    if (user){
+    // user is signed 
+    router.push('/dashboard');
+  } else if (error) {
+    // handle with error
+
+  } 
+};
   return (
      <>
        <Head>
@@ -34,7 +49,7 @@ const LoginPage = () => {
           <Container className={`${styles.main} py-5`}>     
       <Row className="justify-content-center">
         <Col xs={12} md={6} lg={4} className="text-center">
-        {/*   <Logo /> */}
+      <Logo />
       <h1 className={`${styles.description} mt-3 mb-4`}>Login</h1>
       <p className={`${styles.description} lead mb-4`}>
       Welcome back to FloralFlow!<br></br>
@@ -59,8 +74,8 @@ Please enter your email and password to access your account.          </p>
       </form>
     </Col>
      </Row>
-        </Container>
-</>
+     </Container>
+    </>
   );
 };
 

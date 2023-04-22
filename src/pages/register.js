@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, FormCheck } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { auth, app } from '../lib/firebase';
 import { useRouter } from 'next/router';
 import styles from '../styles/Register.module.css';
 

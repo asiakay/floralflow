@@ -2,10 +2,13 @@
 import React from 'react';
 import { useUser } from '../contexts/UserProvider';
 import styles from '../styles/Header.module.css';
-
+import Image from 'next/image'
 const Header = () => {
   const { user } = useUser();
-  return (
+  (<>
+  <div>
+  <Image src="/Logo.png" alt="Logo" width={200} height={100} />
+
     <header className={styles.header}>
       <div className={styles.logo}>FloralFlow</div>
       <nav>
@@ -17,6 +20,8 @@ const Header = () => {
       </nav>
       {user ? <button>Logout</button> : <button>Login</button>}
     </header>
+    </div>
+    </>
   );
 };
 

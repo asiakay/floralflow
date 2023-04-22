@@ -1,7 +1,9 @@
 import React from 'react';
 import { Navbar, Container } from 'react-bootstrap';
-//import Logo from './Logo';
-import Home from '../pages/index';
+import Image from 'next/image';
+
+
+//import Home from '../pages/index';
 
 export default function Layout({ children }) {
   return (
@@ -9,7 +11,7 @@ export default function Layout({ children }) {
       <Navbar bg="light" variant="light" className="mb-5">
         <Container fluid>
           <Navbar.Brand href="/">
-           {/*  <Logo /> */}
+            <Image src="/Logo.png" alt="Logo" width={100} height={50} />
             {' '}
             FloralFlow
           </Navbar.Brand>

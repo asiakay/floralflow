@@ -24,6 +24,8 @@ useEffect(() => {
     }));
     setItems(itemsList);
   };
+    // Check if window is defined before calling fetchItems
+if (typeof window !== 'undefined')
   fetchItems(items);
 }, [items]);
 
@@ -90,6 +92,7 @@ const gridStyle = {
 const itemStyle = {
   border: '1px solid #ccc',
   padding: '1rem',
+  color: '#ccc',
 };
 
 const imageStyle = {

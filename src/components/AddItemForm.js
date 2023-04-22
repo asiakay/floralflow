@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import styles from '../styles/AddItemForm.module.css';
+import { useRouter } from 'next/router';
 
 const AddItemForm = () => {
     const [name, setName] = useState('');
@@ -23,16 +24,21 @@ const AddItemForm = () => {
                 imageUrl,
             });
             console.log('Document written with ID: ', docRef.id);
-        } catch (error) {
-            console.error('Error adding document: ', error);
-        }
-
+        
 // Clear the input fields
 setName('');
 setDescription('');
 setSupplier('');
 setQuantity('');
 setImageUrl('');
+
+// Redirect to dashboard
+router.push('/dashboard');
+console.log('Item added!');
+} catch (error) {
+    console.error('Error adding document: ', error);
+}
+
     };
 
     return (
