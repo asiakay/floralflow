@@ -59,6 +59,9 @@ if (typeof window !== 'undefined')
       <h1 className={`${styles.description} mt-3 mb-4`}>Dashboard</h1>
      
       <p className={styles.welcome}>Welcome, {user?.email}!</p>
+      <br>
+  </br>
+  <Link href="/update-password">Update Password</Link><br></br>
       <Button href="/add" variant="primary" size="lg">Add Item</Button>
 
       <ButtonGroup>
