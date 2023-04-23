@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, ButtonGroup, Button, TabContainer } from 'react-bootstrap';
 import Head from 'next/head'
 import { signInWithEmailAndPassword, signInWithGoogle } from '../lib/auth';
+import Link from 'next/link';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -78,14 +79,24 @@ Please enter your email and password to access your account.          </p>
           onChange={(e) => setPassword(e.target.value)}
           className={styles.input}
         />
+
         <button type="submit" className={styles.input}>Login</button>
         <div className="mt-4">or </div>
+
+     
       <button
       type="button"
-      className='{`${styles.input} ${styles.googleButton}`}'
+    className={styles.input}
       onClick={handleGoogleSignIn}
+
       >Sign in with Google</button>
       </form>
+
+         {/* Forgot Password */}
+         <div className="mt-4">
+          <Link href="/forgot-password">Forgot Password?
+          </Link>
+        </div>
     </Col>
      </Row>
      </Container>
