@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import styles from '../styles/AddItemForm.module.css';
@@ -11,6 +11,8 @@ const AddItemForm = () => {
     const [quantity, setQuantity] = useState('');
     const [imageUrl, setImageUrl] = useState('');
 
+    const router = useRouter();
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
             // Create an item object

@@ -1,20 +1,44 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { signInWithGoogle as signInWithGoogleLib } from '../lib/auth';
+import { 
+  getAuth, 
+  signInWithEmailAndPassword as signInWithEmail, 
+  GoogleAuthProvider, 
+  signInWithPopup,
+  signOut as signOutUser
+} from 'firebase/auth';
+import { auth } from './firebase';
 
 const googleProvider = new GoogleAuthProvider();
-const auth = getAuth();
 
-const Auth = async () => {
+export const signInWithEmailAndPassword = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmail(auth, email, password);
+    return { user: userCredential.user, error: null };
+  } catch (error) {
+    console.error('Error signing in with email and password:', error);
+    return { user: null, error };
+  }
+};
+
+export const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
     const credential = GoogleAuthProvider.credentialFromResult(res);
-    const token = credential.accessToken;
+    const token = credential.accessToken
     const user = res.user;
     return { user, token };
-  } catch (error) {
+  } catch (error){
     console.log(error);
     return { error };
   }
 };
 
-export default Auth;
+
+export const signOut = async () => {
+  try {
+    await signOutUser(auth);
+  } catch (error) {
+    console.error('Error signing out:', error);
+  }
+};
+
+

@@ -8,7 +8,7 @@ import styles from '../styles/Register.module.css';
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleRegister = async (e) => {

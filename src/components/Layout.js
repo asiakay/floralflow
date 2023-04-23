@@ -11,7 +11,7 @@ export default function Layout({ children }) {
       <Navbar bg="light" variant="light" className="mb-5">
         <Container fluid>
           <Navbar.Brand href="/">
-            <Image src="/Logo.png" alt="Logo" width={100} height={50} />
+            <Image src="/Logo.jpg" alt="Logo" width={100} height={50} />
             {' '}
             FloralFlow
           </Navbar.Brand>

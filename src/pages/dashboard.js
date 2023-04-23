@@ -8,6 +8,8 @@ import Head from 'next/head'
 import Image from 'next/image';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import Link from 'next/link';
+
 
 const DashboardPage = () => {
   const { user, loading, logout } = useUser();
@@ -26,8 +28,8 @@ useEffect(() => {
   };
     // Check if window is defined before calling fetchItems
 if (typeof window !== 'undefined')
-  fetchItems(items);
-}, [items]);
+  fetchItems();
+}, []);
 
 
 
@@ -67,13 +69,16 @@ if (typeof window !== 'undefined')
      <Row>
       <div style={gridStyle}>
         {items.map(item => (
-          <div key={item.id} style={itemStyle}>
+          <Link key={item.id} href={`/items/${item.id}`}>
+            <a style={itemStyle}>
+              <Image src={item.image} style={imageStyle} alt={item.name} />
             <Image src={item.image} style={imageStyle} alt={item.name} />
             <h3>{item.name}</h3>
             <p>{item.description}</p>
             <p>Supplier: {item.supplier}</p>
             <p>Quantity: {item.quantity}</p>
-            </div>
+            </a>
+            </Link>
         ))}
       </div>
      </Row>

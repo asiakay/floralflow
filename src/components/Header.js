@@ -7,7 +7,7 @@ const Header = () => {
   const { user } = useUser();
   (<>
   <div>
-  <Image src="/Logo.png" alt="Logo" width={200} height={100} />
+  <Image src="/Logo.jpg" alt="Logo" width={200} height={100} />
 
     <header className={styles.header}>
       <div className={styles.logo}>FloralFlow</div>
