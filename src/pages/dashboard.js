@@ -71,14 +71,14 @@ if (typeof window !== 'undefined')
         {items.map(item => (
           <div key={item.id} style={itemStyle}>
           <Link href={`/item/${item.id}`}>
-<a>
+
             <Image src={item.image} style={imageStyle} alt={item.name} />
             <Image src={item.image} style={imageStyle} alt={item.name} />
             <h3>{item.name}</h3>
             <p>{item.description}</p>
             <p>Supplier: {item.supplier}</p>
             <p>Quantity: {item.quantity}</p>
-            </a>
+
           </Link>
           </div>
              ))}

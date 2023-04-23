@@ -1,7 +1,7 @@
 // pages/item/[id].js
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 
 const ItemPage = () => {
@@ -11,7 +11,7 @@ const ItemPage = () => {
 
     const [item, setItem] = useState(null);
 
-    useeffect(() => {
+    useEffect(() => {
         const fetchItem = async () => {
             if (id) {
                 const itemDoc = doc(db, 'items', id);
@@ -25,15 +25,33 @@ const ItemPage = () => {
             fetchItem();
         }, [id]);
 
+        const handleEdit = () => {
+            router.push(`/edit/${id}`);
+        };
+
+        const handleDelete = async () => {
+            if (confirm('Are you sure you want to delete this item?')) {
+                const itemDoc = doc(db, 'items', id);
+                await deleteDoc(itemDoc);
+                router.push('/dashboard');
+            }
+            };
+
         return (
             <div>
+                {item ?
+                <> 
+                  
                 <h2>{item.name}</h2>
                 <p>{item.description}</p>
                 <p>{item.supplier}</p>
                 <p>{item.quantity}</p>
-                {{/* add buttons for eediting and deleeeting the iteeme */}}
+ <button onClick={handleEdit}>Edit</button>
+          <button onClick={handleDelete}>Delete</button>                </> : (
+            <p>Loading...</p>
+                )}
                 </div>
-        );
+                );
     };
 
     export default ItemPage;
