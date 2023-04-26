@@ -1,4 +1,4 @@
-import firebase from './firebase';
+import { firebase, auth } from './firebase';
 
 export const addUserToFirestore = async (user) => {
     console.log('Adding user to Firestore:', user);
