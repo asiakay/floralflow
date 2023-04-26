@@ -10,7 +10,8 @@ import { signInWithEmailAndPassword } from '../lib/auth';
 
 import styles from '../styles/Login.module.css';
 import { auth, app, googleProvider } from '../lib/firebase';
-import { firebase, addUserToFirestore } from '../lib/userUtils';
+import { addUserToFirestore } from '../lib/userUtils';
+import { firebase } from '../lib/userUtils';
 
 //const auth = getAuth(app);
 
