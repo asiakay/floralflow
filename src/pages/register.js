@@ -29,7 +29,10 @@ const RegisterPage = () => {
     <h1 className={`${styles.description} mt-3 mb-4`}>Register</h1>
     <p className={`${styles.description} lead mb-4`}>
     Welcome to FloralFlow!<br></br>
-Create an account to streamline your inventory management process. Fill in the form below to get started.        </p>
+Create an account to streamline your inventory management process. 
+<br></br>
+<br></br>
+Fill in the form below to get started.        </p>
       {error && <p className={styles.error}>{error}</p>}
       <form onSubmit={handleRegister} className={styles.form}>
         <input

@@ -1,5 +1,6 @@
 //import { useAnalytics } from '../hooks/useAnalytics';
-
+import{ Analytics } from '@vercel/analytics/react'
+;
 import '@/styles/globals.css'
 import '@/styles/reset.css'; // Import the reset.css file
 
@@ -21,6 +22,7 @@ function App({ Component, pageProps }) {
 
       <Layout>
     <Component {...pageProps} />
+    <Analytics/>
     </Layout>
     </Container>
     </UserProvider>

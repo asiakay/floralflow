@@ -8,6 +8,7 @@ import { useRouter } from 'next/router' ;
 import { auth } from '../lib/firebase';
 import styles from '../styles/Home.module.css'
 
+
 function HomePage() {
   
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ function HomePage() {
 
   const router = useRouter();
 
-  const handleLogin = async (e) => {
+/*   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const { user, error } = await signInWithEmailAndPassword(email, password);
@@ -27,7 +28,11 @@ function HomePage() {
       }
     } catch (error) {
       console.log(error);
+      if (error.code === 'auth/wrong-password') {
+        setError('Invalid credentials');
+      } else {
       setError(error.message);
+      }
     }
   };
  
@@ -40,7 +45,7 @@ function HomePage() {
     // handle with error
 setError(error.message);
   } 
-};
+}; */
 
 
   return (
@@ -52,13 +57,12 @@ setError(error.message);
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
           <Container className={`${styles.main} py-5`}>     
       <Row className="justify-content-center">
         <Col xs={12} md={6} lg={4} className="text-center">
-        <Image src="/Logo.jpg" alt="Logo" width={100} height={50} />
-            {' '}        <h1 className={`${styles.description} mt-3 mb-4`}>Login</h1>
-      <p className={`${styles.description} lead mb-4`}>
+        {/* <Image src="/Logo.jpg" alt="Logo" width={100} height={50} /> */}
+            {' '}        {/* <h1 className={`${styles.description} mt-3 mb-4`}>Login</h1> */}
+{/*       <p className={`${styles.description} lead mb-4`}>
       Welcome back to FloralFlow!<br></br>
 Please enter your email and password to access your account.          </p>
       {error && <p className={styles.error}>{error}</p>}
@@ -77,18 +81,18 @@ Please enter your email and password to access your account.          </p>
           onChange={(e) => setPassword(e.target.value)}
           className={styles.input}
         />
-        <button type="submit" className={styles.input}>Login</button>
+        <button type="submit" className={styles.input}>Login</button> */}
         <ButtonGroup>
   <Button href="/login" variant="primary" size="lg">Login</Button>
   <Button href="/register" variant="secondary" size="lg">Register</Button>
 </ButtonGroup>       
-      <div className="mt-4">or </div>
+   {/*    <div className="mt-4">or </div>
       <button
       type="button"
       className='{`${styles.input} ${styles.googleButton}`}'
       onClick={handleGoogleSignIn}
       >Sign in with Google</button>
-      </form>
+      </form> */}
     </Col>
      </Row>
         </Container>

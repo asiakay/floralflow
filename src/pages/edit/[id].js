@@ -1,7 +1,7 @@
 // pages/edit/[id].js
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 
 const EditItemPage = () => {
@@ -26,7 +26,8 @@ const EditItemPage = () => {
 
                 if (itemSnapshot.exists()) {
                     const itemData = itemSnapshot.data();
-                    setItem({ id: itemData.id, ...itemData});
+                    setItem({ id, ...itemData });
+
                     setUpdatedItem(itemData); 
 
                 } else {
@@ -55,12 +56,12 @@ const EditItemPage = () => {
         e.preventDefault();
 const itemDoc = doc(db, 'items', id); // Created the itemDoc inside the function
         await updateDoc(itemDoc, updatedItem);
-        router.push('/item/${id}');
+        router.push(`/item/${id}`);
     };  
 
     return (
         <div>
-            <>
+            
             <h1>Edit Item</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='name'>Name:</label>
@@ -70,12 +71,8 @@ const itemDoc = doc(db, 'items', id); // Created the itemDoc inside the function
                     value={updatedItem.name}
                     onChange={handleChange}
                     />
-                    <input 
-                    type='text'
-                    name='description'
-                    value={updatedItem.description}
-                    onChange={handleChange}
-                    />
+
+                
                     <label htmlFor='description'>Description:</label>
                     <input
                     type='text'
@@ -99,19 +96,19 @@ const itemDoc = doc(db, 'items', id); // Created the itemDoc inside the function
                     />  
                     <label htmlFor='quantity'>Quantity:</label>
                     <input 
-                    type='text'
+                    tyepe='text'
                     name='quantity'
                     value={updatedItem.quantity}
                     onChange={handleChange}
                     />
                     <button type='submit'>Update Item</button>
             </form>
-            </>
-            ) : (
-                <p>Loading...</p>
-            )
+        
+           
             </div>
     );
 };
 
 export default EditItemPage;
+
+
