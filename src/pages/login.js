@@ -5,9 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+//import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithGoogle } from '../lib/auth';
+
 import styles from '../styles/Login.module.css';
-import { app } from '../lib/firebase';
-const auth = getAuth(app);
+import { auth, app, googleProvider } from '../lib/firebase';
+import { firebase, addUserToFirestore } from '../lib/userUtils';
+
+//const auth = getAuth(app);
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -15,6 +19,13 @@ function LoginPage() {
   const [error, setError] = useState('');
 
   const router = useRouter();
+
+  const handleUserLogin = async (user) => {
+    const userDoc = await firebase.firestore.collection('users').doc(user.uid).get();
+    if (!userDoc.exists) {
+      await addUserToFirestore(user);
+    }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,6 +41,8 @@ function LoginPage() {
     }
   };
 
+
+
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
@@ -40,7 +53,6 @@ function LoginPage() {
       setError(error.message);
     }
   };
-  
 
   return (
     <Container className={`${styles.main} py-5`}>

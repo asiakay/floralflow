@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { deleteDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
+import styles from '../../styles/EditItem.module.css';
 
 const ItemPage = () => {
     const router = useRouter();
@@ -38,18 +39,21 @@ const ItemPage = () => {
             };
 
         return (
-            <div>
+            <div className={styles.container}>
+
+            <div className='{styles.main}'>
                 {item ?
                 <> 
                   
                 <h2>{item.name}</h2>
-                <p>{item.description}</p>
-                <p>{item.supplier}</p>
-                <p>{item.quantity}</p>
+                <p>Description: {item.description}</p>
+                <p>Supplier: {item.supplier}</p>
+                <p>Quantity in stock: {item.quantity}</p>
  <button onClick={handleEdit}>Edit</button>
           <button onClick={handleDelete}>Delete</button>                </> : (
             <p>Loading...</p>
                 )}
+                </div>
                 </div>
                 );
     };

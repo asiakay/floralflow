@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useUser } from '../contexts/UserProvider';
-import { Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
+import { useUser } from '../contexts/UserContext';
+import { Container, Row, Col, ButtonGroup, Button, Table } from 'react-bootstrap';
 import Head from 'next/head'
 //import AddItemForm from '../components/AddItemForm';
 import Image from 'next/image';
@@ -34,7 +34,7 @@ const DashboardPage = () => {
   const router = useRouter();
 
   // If the user is not logged in, redirect them to the login page
-  if (!loading && !user) {
+ if (!loading && !user) {
     router.push('/login');
   }
 
@@ -53,27 +53,37 @@ const DashboardPage = () => {
     </Head>
     <Container className={`${styles.main} py-5`}>
       <Row className="justify-content-center">
-        <Col xs={12} md={6} lg={4} className="text-center">
-          {/*   <Logo /> */}
-          <h1 className={`${styles.description} mt-3 mb-4`}>Dashboard</h1>
+         
+         <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Item Description</th>
+{/*                 <th>Supplier</th>
+ */}                <th>Quantity</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map(item => (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.description}</td>
+{/*                   <td>{item.supplier}</td>
+ */}                  <td>{item.quantity}</td>
+                  <td><Link href={`/edit/${item.id}`}>Edit</Link></td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+            
+         
+         
+         
+         
+               {/* Display the iteeeeeeeeeeeeeeeeeeeeeeeeeems in a grid view */}
 
-          <p className={styles.welcome}>Welcome, {user?.email}!</p>
-
-          {/* Link to the update password page */}
-          <Link href="/update-password">Update Password</Link><br></br>
-
-          {/* Button to add a new item */}
-          <Button href="/add" variant="primary" size="lg">Add Item</Button>
-
-          {/* Button to log out */}
-          <ButtonGroup>
-            <button type="submit" className={styles.input} onClick={logout}>Logout</button>   
-          </ButtonGroup>
-        </Col>
-      </Row>
-      <Row>
-        {/* Display the iteeeeeeeeeeeeeeeeeeeeeeeeeems in a grid view */}
-        <div style={gridStyle}>
+         {/*  <div style={gridStyle}>
           {items.map(item => (
             <div key={item.id} style={itemStyle}>
               <Link href={`/item/${item.id}`}>
@@ -85,16 +95,16 @@ const DashboardPage = () => {
               </Link>
             </div>
           ))}
-        </div>
+        </div> */}
         </Row>
       </Container>
 </>;
 };
 
-// Style for the grid container
+/* // Style for the grid container
 const gridStyle = {
 display: 'grid',
-gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+gridTemplateColumns: 'auto auto auto',
 gridGap: '1rem',
 };
 
@@ -109,6 +119,12 @@ color: '#ccc',
 const imageStyle = {
 maxWidth: '100%',
 height: 'auto',
+}; */
+
+// Style for the images in each item
+const imageStyle = {
+  maxWidth: '100%',
+  height: 'auto',
 };
 
 export default DashboardPage;

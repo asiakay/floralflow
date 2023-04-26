@@ -30,9 +30,7 @@ const AddItemPage = () => {
       <Row className="justify-content-center">
         <Col xs={12} md={6} lg={4} className="text-center">
         {/*   <Logo /> */}
-      <h1 className={`${styles.description} mt-3 mb-4`}><Link href="/dashboard" >Dashboard</Link></h1>
      
-      <p className={styles.welcome}>Welcome, {user?.email}!</p>
       <AddItemForm /> 
       <ButtonGroup>
         <button type="submit" className={styles.input} onClick={logout}>Logout</button>   

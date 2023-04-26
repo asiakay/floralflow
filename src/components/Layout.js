@@ -44,7 +44,10 @@ const handleLogout = async () => {
               Signed in as: <Link href="/profile">{user.email}</Link>
               </Navbar.Text>
               <Navbar.Text className={`${styles.NavbarText}`}>
-                <Link href="/dashboard">Dashboard</Link>{' '}
+                <Link href="/dashboard">View Items</Link>{' '}
+              </Navbar.Text>
+              <Navbar.Text className={`${styles.NavbarText}`}>
+                <Link href="/add">Add Item</Link>{' '}
               </Navbar.Text>
               <Navbar.Text className={`${styles.NavbarText}`}>
                 <Link href="#" onClick={handleLogout}>  Logout</Link>   

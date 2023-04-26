@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import {auth, app, googleProvider } from '../lib/firebase';
+import {auth, app, googleProvider, firebase, firestore } from '../lib/firebase';
 import { useRouter } from 'next/router';
 import styles from '../styles/Register.module.css';
+import { addUserToFirestore } from '../lib/userUtils';
+//import firebase from '../lib/firebase/firebase';
 
 //const auth = getAuth(app);
 const RegisterPage = () => {
@@ -23,6 +25,7 @@ const RegisterPage = () => {
   };
 
  
+ 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
@@ -35,6 +38,31 @@ const RegisterPage = () => {
   };
 
 
+// Call addUserToFirestore when a user signs up or logs in:
+/* useEffect(() => {
+  const unsubscribe = auth.onAuthStateChanged(async(user) => {
+    if (user) {
+      console.log('Authenticated user:', user);
+
+      const userDoc = await firebase.firestore.collection('users').doc(user.uid).get();
+      if (!userDoc.exists) {
+        await addUserToFirestore(user);
+      }
+    }
+  });
+  return () => {
+    unsubscribe();
+  };
+}, []); */
+
+/* firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    const userDoc = firebase.firestore().collection('users').doc(user.uid).get();
+    if (!userDoc.exists) {
+       addUserToFirestore(user);
+    }
+  }
+}); */
 
   return (
     <Container className={`${styles.main} py-5`}>     

@@ -6,7 +6,7 @@ import '@/styles/reset.css'; // Import the reset.css file
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container } from 'react-bootstrap';
-import { UserProvider } from '../contexts/UserProvider';
+import { UserProvider } from '../contexts/UserContext';
 import Layout from '../components/Layout';
 function App({ Component, pageProps }) {
  // useAnalytics();

@@ -45,18 +45,18 @@ console.log('Item added!');
 
     return (
         <form onSubmit={handleSubmit}>
-            <input
-                type="text"
+           <label>Name:</label>
+           <input   
+           type="text"
                 placeholder="Name"
                 value={name}    
                 onChange={(e) => setName(e.target.value)}
                 />  
-                <input
-                type="text"
-                placeholder="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                />
+           <select value={description} onChange={(e) => setDescription(e.target.value)}>
+  <option value="">-- Select Category --</option>
+  <option value="flowers & bouquets">Flowers & Bouquets</option>
+  <option value="plants & greenery">Plants & Greenery</option>
+</select>
                 <input
                 type="text"
                 placeholder="Supplier"
