@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, app } from '../lib/firebase';
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {auth, app, googleProvider } from '../lib/firebase';
 import { useRouter } from 'next/router';
 import styles from '../styles/Register.module.css';
 
+//const auth = getAuth(app);
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,12 +15,26 @@ const RegisterPage = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+     await createUserWithEmailAndPassword(auth, email, password);
       router.push('/dashboard');
     } catch (error) {
       setError(error.message);
     }
   };
+
+ 
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    const { user, error } = await signInWithPopup(auth, provider);
+    if (user !== null) {
+      router.push('/dashboard');
+    } else if (error) {
+      setError(error.message);
+    }
+  };
+
+
 
   return (
     <Container className={`${styles.main} py-5`}>     
@@ -51,6 +66,14 @@ Fill in the form below to get started.        </p>
         />
         <button type="submit" className={styles.input}>Register</button>
       </form>
+      <div className="mt-4">or</div>
+      <button
+        type="button"
+        className={styles.input}
+        onClick={handleGoogleSignIn}
+      >
+        Register with Google
+      </button>
       </Col>
      </Row>
         </Container>
