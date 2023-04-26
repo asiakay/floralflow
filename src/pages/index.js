@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword, signInWithGoogle } from '../lib/auth';
 import { useUser } from '../contexts/UserContext';
 
 import Image from 'next/image';
-//import { useRouter } from 'next/router' ;
+import { useRouter } from 'next/router' ;
 import { auth } from '../lib/firebase';
 import styles from '../styles/Home.module.css'
 import Link from 'next/link';
@@ -18,7 +18,7 @@ function HomePage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  //const router = useRouter();
+  const router = useRouter();
 
 /*   const handleLogin = async (e) => {
     e.preventDefault();
@@ -102,8 +102,8 @@ Please enter your email and password to access your account.          </p>
 
      ) : (
         <ButtonGroup>
-  <button href="/login"  className={`${styles.input}`}>Login</button>
-  <button href="/register"  className={`${styles.input}`}>Register</button>
+  <Link href="/login"  className={`${styles.input}`}>Login</Link>
+  <Link href="/register"  className={`${styles.input}`}>Register</Link>
 </ButtonGroup>       
   )}
     </Col>

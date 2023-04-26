@@ -34,9 +34,7 @@ const AddItemPage = () => {
         {/*   <Logo /> */}
      
       <AddItemForm /> 
-      <ButtonGroup>
-        <button type="submit" className={styles.input} onClick={logout}>Logout</button>   
-      </ButtonGroup>
+     
       </Col>
       </Row>
     </Container>
