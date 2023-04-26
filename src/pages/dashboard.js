@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useUser } from '../contexts/UserContext';
 import { Container, Row, Col, ButtonGroup, Button, Table } from 'react-bootstrap';
 import Head from 'next/head'
-//import AddItemForm from '../components/AddItemForm';
 import Image from 'next/image';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -25,19 +23,17 @@ const DashboardPage = () => {
       }));
       setItems(itemsList);
     };
-    // Check if window is defined before calling fetchItems
-    if (typeof window !== 'undefined') {
-      fetchItems();
-    }
+    fetchItems();
   }, []);
 
-  const router = useRouter();
-
-  // If the user is not logged in, redirect them to the login page
- if (!loading && !user) {
-    router.push('/login');
-  }
-
+ /*  // If the user is not logged in, redirect them to the login page
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    
+    }
+  }, [loading, user]);
+ */
   // If the page is still loading, display a loading message
   if (loading) {
     return <div>Loading...</div>;
@@ -59,8 +55,7 @@ const DashboardPage = () => {
               <tr>
                 <th>Item Name</th>
                 <th>Item Description</th>
-{/*                 <th>Supplier</th>
- */}                <th>Quantity</th>
+                <th>Quantity</th>
                 <th>Edit</th>
               </tr>
             </thead>
@@ -69,57 +64,17 @@ const DashboardPage = () => {
                 <tr key={item.id}>
                   <td>{item.name}</td>
                   <td>{item.description}</td>
-{/*                   <td>{item.supplier}</td>
- */}                  <td>{item.quantity}</td>
+                  <td>{item.quantity}</td>
                   <td><Link href={`/edit/${item.id}`}>Edit</Link></td>
                 </tr>
               ))}
             </tbody>
           </Table>
-            
          
-         
-         
-         
-               {/* Display the iteeeeeeeeeeeeeeeeeeeeeeeeeems in a grid view */}
-
-         {/*  <div style={gridStyle}>
-          {items.map(item => (
-            <div key={item.id} style={itemStyle}>
-              <Link href={`/item/${item.id}`}>
-                <Image src={item.image} style={imageStyle} alt={item.name} />
-                <h3>{item.name}</h3>
-                <p>{item.description}</p>
-                <p>Supplier: {item.supplier}</p>
-                <p>Quantity: {item.quantity}</p>
-              </Link>
-            </div>
-          ))}
-        </div> */}
         </Row>
       </Container>
 </>;
 };
-
-/* // Style for the grid container
-const gridStyle = {
-display: 'grid',
-gridTemplateColumns: 'auto auto auto',
-gridGap: '1rem',
-};
-
-// Style for each item in the grid
-const itemStyle = {
-border: '1px solid #ccc',
-padding: '1rem',
-color: '#ccc',
-};
-
-// Style for the images in each item
-const imageStyle = {
-maxWidth: '100%',
-height: 'auto',
-}; */
 
 // Style for the images in each item
 const imageStyle = {

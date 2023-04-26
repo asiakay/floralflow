@@ -74,3 +74,9 @@
   border-radius: 4px;
   outline: none;
 }
+
+.label {
+  display: inline-block;
+  width: 150px;
+  text-align: center;
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Container } from 'react-bootstrap';
+import { Navbar, Container, Nav, Offcanvas } from 'react-bootstrap';
 import Image from 'next/image';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../lib/firebase';
@@ -20,40 +20,46 @@ export default function Layout({ children }) {
     return () => unsubscribe();
   }, []);
 
-const handleLogout = async () => {
-  try {
-    await signOut(auth);
-    setUser(null);
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const expand = 'lg'; // Set the value of expand here
 
   return (
     <>
-      <Navbar bg="light" variant="light" className="mb-5">
+      <Navbar bg="light" expand={expand} className="mb-3">
         <Container fluid>
           <Navbar.Brand href="/">
             <Image src="/Logo.jpg" alt="Logo" width={100} height={50} />
             {' '}
             FloralFlow
           </Navbar.Brand>
-          {user && (
-            <div className="d-flex ms-auto">
-              <Navbar.Text className="me-3">
-              Signed in as: <Link href="/profile">{user.email}</Link>
-              </Navbar.Text>
-              <Navbar.Text className={`${styles.NavbarText}`}>
-                <Link href="/dashboard">View Items</Link>{' '}
-              </Navbar.Text>
-              <Navbar.Text className={`${styles.NavbarText}`}>
-                <Link href="/add">Add Item</Link>{' '}
-              </Navbar.Text>
-              <Navbar.Text className={`${styles.NavbarText}`}>
-                <Link href="#" onClick={handleLogout}>  Logout</Link>   
-              </Navbar.Text>
-            </div>
-          )}
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+          <Navbar.Collapse id={`offcanvasNavbar-expand-${expand}`}>
+            <Nav className="justify-content-end flex-grow-1 pe-3">
+              {user ? (
+                <>
+                  <Nav.Link href="/profile">
+                    Signed in as: {user.email}
+                  </Nav.Link>
+                  <Nav.Link href="/dashboard">View Items</Nav.Link>
+                  <Nav.Link href="/add" >Add Item                    
+                  </Nav.Link>
+                  <Nav.Link href="#" onClick={handleLogout}>
+                    Logout
+                  </Nav.Link>
+                </>
+              ) : (
+                <Nav.Link href="/login">Login</Nav.Link>
+              )}
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
       {children}

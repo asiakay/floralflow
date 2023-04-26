@@ -45,31 +45,32 @@ console.log('Item added!');
 
     return (
         <form onSubmit={handleSubmit}>
-           <label>Name:</label>
+           <label className={`${styles.label}`}>Name</label>
            <input   
            type="text"
                 placeholder="Name"
                 value={name}    
                 onChange={(e) => setName(e.target.value)}
                 />  
-           <select value={description} onChange={(e) => setDescription(e.target.value)}>
+          <label className={`${styles.label}`}>Type</label>  <select value={description} onChange={(e) => setDescription(e.target.value)}>
   <option value="">-- Select Category --</option>
   <option value="flowers & bouquets">Flowers & Bouquets</option>
   <option value="plants & greenery">Plants & Greenery</option>
 </select>
-                <input
+<label className={`${styles.label}`}>Supplier</label>    <input
                 type="text"
                 placeholder="Supplier"
                 value={supplier}
                 onChange={(e) => setSupplier(e.target.value)}
                 />
+               <label className={`${styles.label}`}>Units in Stock:</label>   
                 <input
                 type="text"
                 placeholder="Quantity"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
                 />
-                <input
+                 <label className={`${styles.label}`}>Image:</label>  <input
                 type="text"
                 placeholder="Image URL"
                 value={imageUrl}

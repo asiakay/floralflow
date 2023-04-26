@@ -35,6 +35,16 @@
   border-radius: var(--border-radius);
 }
 
+.input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
 .code {
   font-weight: 700;
   font-family: var(--font-mono);

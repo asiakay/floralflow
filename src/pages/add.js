@@ -1,6 +1,6 @@
 import React from 'react';
-import { useRouter } from 'next/router';
-import { useUser } from '../contexts/UserProvider';
+//import { useRouter } from 'next/router';
+import { useUser } from '../contexts/UserContext';
 import { Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import Head from 'next/head'
 import AddItemForm from '../components/AddItemForm';
@@ -9,12 +9,14 @@ import Link from 'next/link';
 
 const AddItemPage = () => {
   const { user, loading, logout } = useUser();
-  const router = useRouter();
+  /* const router = useRouter();
 
-  if (!loading && !user) {
-    router.push('/login');
-  }
-
+  React.useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [loading, user, router]);
+ */
   if (loading) {
     return <div>Loading...</div>;
   }

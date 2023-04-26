@@ -2,20 +2,23 @@ import React, { useState } from 'react';
 import { Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import Head from 'next/head'
 import { signInWithEmailAndPassword, signInWithGoogle } from '../lib/auth';
+import { useUser } from '../contexts/UserContext';
 
 import Image from 'next/image';
-import { useRouter } from 'next/router' ;
+//import { useRouter } from 'next/router' ;
 import { auth } from '../lib/firebase';
 import styles from '../styles/Home.module.css'
+import Link from 'next/link';
 
 
 function HomePage() {
-  
+  const {user} = useUser();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const router = useRouter();
+  //const router = useRouter();
 
 /*   const handleLogin = async (e) => {
     e.preventDefault();
@@ -50,6 +53,8 @@ setError(error.message);
 
   return (
      <>
+
+
        <Head>
 
         <title>FloralFlow App</title>
@@ -57,9 +62,14 @@ setError(error.message);
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+     
           <Container className={`${styles.main} py-5`}>     
       <Row className="justify-content-center">
         <Col xs={12} md={6} lg={4} className="text-center">
+
+      
+
+
         {/* <Image src="/Logo.jpg" alt="Logo" width={100} height={50} /> */}
             {' '}        {/* <h1 className={`${styles.description} mt-3 mb-4`}>Login</h1> */}
 {/*       <p className={`${styles.description} lead mb-4`}>
@@ -82,20 +92,24 @@ Please enter your email and password to access your account.          </p>
           className={styles.input}
         />
         <button type="submit" className={styles.input}>Login</button> */}
+            <p className={`${styles.description} lead mb-4`}>
+
+        FloralFlow is a progressive web app that helps retail floral department managers and employees manage inventory, reduce waste, and streamline workflows through effective process management.<br></br><br></br>
+        </p>
+
+        {user ? (
+<Link href="https://floral487.gitbook.io/floral-clerk-manual/">Floral Clerk Manual</Link>
+
+     ) : (
         <ButtonGroup>
-  <Button href="/login" variant="primary" size="lg">Login</Button>
-  <Button href="/register" variant="secondary" size="lg">Register</Button>
+  <button href="/login"  className={`${styles.input}`}>Login</button>
+  <button href="/register"  className={`${styles.input}`}>Register</button>
 </ButtonGroup>       
-   {/*    <div className="mt-4">or </div>
-      <button
-      type="button"
-      className='{`${styles.input} ${styles.googleButton}`}'
-      onClick={handleGoogleSignIn}
-      >Sign in with Google</button>
-      </form> */}
+  )}
     </Col>
      </Row>
         </Container>
+    
 </>
   );
 }

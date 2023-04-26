@@ -1,7 +1,7 @@
 //import { useAnalytics } from '../hooks/useAnalytics';
 import{ Analytics } from '@vercel/analytics/react'
 ;
-import '@/styles/globals.css'
+import '../styles/globals.css'
 import '@/styles/reset.css'; // Import the reset.css file
 
 import 'bootstrap/dist/css/bootstrap.min.css';
