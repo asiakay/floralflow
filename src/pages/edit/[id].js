@@ -1,14 +1,13 @@
 // pages/edit/[id].js
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import styles from '../../styles/EditItem.module.css';
 
 const EditItemPage = () => {
   const router = useRouter();
   const { id } = router.query;
-
   const [item, setItem] = useState(null);
   const [updatedItem, setUpdatedItem] = useState({
     name: '',
@@ -16,6 +15,7 @@ const EditItemPage = () => {
     price: '',
     supplier: '',
     quantity: '',
+    updatedAt: '',
   });
 
   useEffect(() => {
@@ -40,6 +40,7 @@ const EditItemPage = () => {
 
   const handleChange = (e) => {
     setUpdatedItem({ ...updatedItem, [e.target.name]: e.target.value });
+
   };
 
   const handleDelete = async () => {
@@ -54,8 +55,17 @@ const EditItemPage = () => {
     e.preventDefault();
     const itemDoc = doc(db, 'items', id);
     await updateDoc(itemDoc, updatedItem);
-    router.push(`/item/${id}`);
+  
+    // Retrieve the updated document and extract the updatedAt field
+    const updatedItemSnapshot = await getDoc(itemDoc);
+    const updatedItemData = updatedItemSnapshot.data();
+    const updatedAt = updatedItemData && updatedItemData.updatedAt ? new Date(updatedItemData.updatedAt) : null;
+  
+    setItem({ ...item, ...updatedItem, updatedAt });
+    setUpdatedItem({ ...updatedItem, updatedAt });
+    router.push(`/item/${id}?updatedAt=${updatedAt ? updatedAt.getTime() : null}`);
   };
+
 
   return (
     <div className={styles.container}>
@@ -104,6 +114,15 @@ const EditItemPage = () => {
           onChange={handleChange}
         />
 
+<label htmlFor='updatedAt'>Updated:</label>
+        <input
+          type='date'
+          name='updatedAt'
+          value={updatedItem.updatedAt}
+         /*  onChange={handleChange} */
+          onChange={(e) =>
+          setUpdatedItem({...updatedItem, updatedAt: e.target.value})
+          }/>
         <button type='submit'>Update Item</button>
       </form>
     </div>

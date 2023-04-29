@@ -1,14 +1,62 @@
+import { initializeApp } from 'firebase/app';
+import { 
+  getAuth,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  } from 'firebase/auth';
+  import { 
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    limit,
+    onSnapshot,
+    doc,
+    setDoc,
+    updateDoc,
+    
+    serverTimestamp 
+  } from 'firebase/firestore';
+  import { 
+    getStorage,
+    ref,
+    uploadBytesResumable,
+    getDownloadURL,
+  } from 'firebase/storage';
+  import {
+    getMessaging,
+    getToken,
+    onMessage
+  } from 'firebase/messaging'; 
+  import { getFirebaseConfig } from '../lib/firebase';
+
+
+
 import React, { useState } from 'react';
-import { Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
+import { Container, Row, Col, ButtonGroup, /* Button */ } from 'react-bootstrap';
+import Button from '@mui/material/Button';
+
 import Head from 'next/head'
-import { signInWithEmailAndPassword, signInWithGoogle } from '../lib/auth';
 import { useUser } from '../contexts/UserContext';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router' ;
-import { auth } from '../lib/firebase';
+//import { auth } from '../lib/firebase';
 import styles from '../styles/Home.module.css'
 import Link from 'next/link';
+
+ // Signs-in.
+
+async function signIn(){
+  var provider = new GoogleAuthProvider();
+  await signInWithPopup(getAuth(), provider);
+  await signInWithEmailAndPassword(getAuth(), email, password);
+}
 
 
 function HomePage() {
@@ -19,6 +67,19 @@ function HomePage() {
   const [error, setError] = useState('');
 
   const router = useRouter();
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 /*   const handleLogin = async (e) => {
     e.preventDefault();
@@ -98,12 +159,12 @@ Please enter your email and password to access your account.          </p>
         </p>
 
         {user ? (
-<Link href="https://floral487.gitbook.io/floral-clerk-manual/">Floral Clerk Manual</Link>
+<Button href="https://floral487.gitbook.io/floral-clerk-manual/">Floral Clerk Manual</Button>
 
      ) : (
         <ButtonGroup>
-  <Link href="/login"  className={`${styles.input}`}>Login</Link>
-  <Link href="/register"  className={`${styles.input}`}>Register</Link>
+  <Button onClick={signIn}  className={`${styles.input}`}>Login</Button>
+  <Button onClick={signIn}  className={`${styles.input}`}>Register</Button>
 </ButtonGroup>       
   )}
     </Col>

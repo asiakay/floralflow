@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, Offcanvas } from 'react-bootstrap';
+import Button from '@mui/material/Button';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
 import Image from 'next/image';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../lib/firebase';
@@ -29,11 +32,37 @@ export default function Layout({ children }) {
     }
   };
 
-  const expand = 'lg'; // Set the value of expand here
+//const expand = 'lg'; // Set the value of expand here
 
   return (
     <>
-      <Navbar bg="light" expand={expand} className="mb-3">
+ <Container fluid>
+<Navbar.Brand href="/">
+           {/*  <Image src="/Logo.jpg" alt="Logo" width={100} height={50} /> */}
+            {' '}
+            <h1>FloralFlow</h1>
+          </Navbar.Brand>
+{user ? (
+  <>
+ <Breadcrumb>
+ <Breadcrumb.Item href="/profile">{user.email}</Breadcrumb.Item>
+ <Breadcrumb.Item href="/dashboard">View Items</Breadcrumb.Item>
+ <Breadcrumb.Item href="/add">Add Item</Breadcrumb.Item>
+  <Breadcrumb.Item href="/logout">Logout</Breadcrumb.Item>
+ 
+ </Breadcrumb>
+ </>
+) : (
+  <Breadcrumb>
+  <Breadcrumb.Item href="/login">Login</Breadcrumb.Item>
+  <Breadcrumb.Item href="/register">Sign Up</Breadcrumb.Item>
+  </Breadcrumb>
+)}
+ 
+ {children} 
+  </Container>
+
+{/*      <Navbar bg="light" expand={expand} className="mb-3">
         <Container fluid>
           <Navbar.Brand href="/">
             <Image src="/Logo.jpg" alt="Logo" width={100} height={50} />
@@ -62,7 +91,7 @@ export default function Layout({ children }) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {children}
+      {children}  */}
     </>
   );
 }

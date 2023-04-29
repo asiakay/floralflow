@@ -17,10 +17,18 @@ const DashboardPage = () => {
     const fetchItems = async () => {
       const itemsCollection = collection(db, 'items');
       const itemsSnapshot = await getDocs(itemsCollection);
-      const itemsList = itemsSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      const itemsList = itemsSnapshot.docs.map(doc => {
+        console.log(doc.data());
+        return {
+          id: doc.id,
+          name: doc.data().name,
+          description: doc.data().description,
+          quantity: doc.data().quantity,
+          price: doc.data().price,
+          createdAt: doc.data().createdAt ? doc.data().createdAt.toDate() : null,
+          updatedAt: doc.data().updatedAt && doc.data().updatedAt.toDate ? doc.data().updatedAt.toDate() : null,
+        };
+      });
       setItems(itemsList);
     };
     fetchItems();
@@ -57,6 +65,8 @@ const DashboardPage = () => {
                 <th>Item Description</th>
                 <th>Quantity</th>
                 <th>Edit</th>
+                <th>Last Updated</th>
+                <th>Created At</th>
               </tr>
             </thead>
             <tbody>
@@ -66,6 +76,8 @@ const DashboardPage = () => {
                   <td>{item.description}</td>
                   <td>{item.quantity}</td>
                   <td><Link href={`/edit/${item.id}`}>Edit</Link></td>
+                  <td>{item.updatedAt ? item.updatedAt.toLocaleString() : 'N/A'}</td>
+                  <td>{item.createdAt ? item.createdAt.toLocaleString() : 'N/A'}</td>
                 </tr>
               ))}
             </tbody>

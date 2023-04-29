@@ -24,6 +24,8 @@ const AddItemForm = () => {
                 supplier,
                 quantity,
                 imageUrl,
+                createdAt: new Date(),
+                updatedAt: new Date(),
             });
             console.log('Document written with ID: ', docRef.id);
         
@@ -52,17 +54,25 @@ console.log('Item added!');
                 value={name}    
                 onChange={(e) => setName(e.target.value)}
                 />  
-          <label className={`${styles.label}`}>Type</label>  <select value={description} onChange={(e) => setDescription(e.target.value)}>
-  <option value="">-- Select Category --</option>
-  <option value="flowers & bouquets">Flowers & Bouquets</option>
-  <option value="plants & greenery">Plants & Greenery</option>
-</select>
-<label className={`${styles.label}`}>Supplier</label>    <input
+                <br></br>
+           <label className={`${styles.label}`}>Type</label>  
+           <select 
+                value={description} 
+                onChange={(e) => 
+                setDescription(e.target.value)}
+                >
+                <option value="">-- Select Category --</option>
+                <option value="flowers & bouquets">Flowers & Bouquets</option>
+                <option value="plants & greenery">Plants & Greenery</option>
+                </select>
+           {/*      <label className={`${styles.label}`}>Supplier</label>    
+                <input
                 type="text"
                 placeholder="Supplier"
                 value={supplier}
                 onChange={(e) => setSupplier(e.target.value)}
-                />
+                /> */}
+
                <label className={`${styles.label}`}>Units in Stock:</label>   
                 <input
                 type="text"
@@ -70,7 +80,8 @@ console.log('Item added!');
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
                 />
-                 <label className={`${styles.label}`}>Image:</label>  <input
+                 <label className={`${styles.label}`}>Image:</label>  
+                 <input
                 type="text"
                 placeholder="Image URL"
                 value={imageUrl}
