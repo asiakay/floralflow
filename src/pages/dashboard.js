@@ -72,7 +72,7 @@ const DashboardPage = () => {
             <tbody>
               {items.map(item => (
                 <tr key={item.id}>
-                  <td>{item.name}</td>
+                  <td><Link href={`/item/${item.id}`}>{item.name}</Link></td>
                   <td>{item.description}</td>
                   <td>{item.quantity}</td>
                   <td><Link href={`/edit/${item.id}`}>Edit</Link></td>

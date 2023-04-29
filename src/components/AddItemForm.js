@@ -27,6 +27,7 @@ const AddItemForm = () => {
                 createdAt: new Date(),
                 updatedAt: new Date(),
             });
+            const id = docRef.id;
             console.log('Document written with ID: ', docRef.id);
         
 // Clear the input fields
@@ -37,7 +38,12 @@ setQuantity('');
 setImageUrl('');
 
 // Redirect to dashboard
-router.push('/dashboard');
+/* router.push('/dashboard'); */
+
+  // Redirect to the ItemPage
+
+  router.push(`/item/${id}`);
+
 console.log('Item added!');
 } catch (error) {
     console.error('Error adding document: ', error);
