@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useUser } from '../contexts/UserContext';
 import { Container, Row, Col, ButtonGroup, Button, Table } from 'react-bootstrap';
 import Head from 'next/head';
@@ -8,10 +8,32 @@ import { db } from '../lib/firebase';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from '../styles/Dashboard.module.css';
+import Chart from 'chart.js/auto';
+
+const ChartComponent = ({ type, data, options }) => {
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    if (chartRef.current) {
+      const chart = new Chart(chartRef.current, {
+        type,
+        data,
+        options,
+      });
+
+      return () => {
+        chart.destroy();
+      };
+    }
+  }, [type, data, options]);
+
+  return <canvas ref={chartRef} />;
+};
 
 const DashboardPage = () => {
   const { user, loading, logout } = useUser();
   const [items, setItems] = useState([]);
+  const [chartData, setChartData] = useState(null);
   const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
@@ -19,7 +41,6 @@ const DashboardPage = () => {
       const itemsCollection = collection(db, 'items');
       const itemsSnapshot = await getDocs(itemsCollection);
       const itemsList = itemsSnapshot.docs.map(doc => {
-        console.log(doc.data());
         return {
           id: doc.id,
           name: doc.data().name,
@@ -31,6 +52,24 @@ const DashboardPage = () => {
         };
       });
       setItems(itemsList);
+
+      // Calculate total quantity of all items
+      const totalQuantity = itemsList.reduce((total, item) => {
+        return total + item.quantity;
+      }, 0);
+
+      // set chart data
+      setChartData({
+        labels: itemsList.map(item => item.name),
+        datasets: [{
+          label: 'Quantity',
+          data: itemsList.map(item => item.quantity),
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+        }],
+        total: totalQuantity,
+      });
     };
 
     // Refetch the items when the updatedAt query parameter changes
@@ -41,12 +80,8 @@ const DashboardPage = () => {
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
-
     fetchItems();
 
-    const handleView = async () => {
-      router.push('/dashboard');
-  }
     // Clean up the event listener when the component is unmounted
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
@@ -55,13 +90,17 @@ const DashboardPage = () => {
 
   const handleEdit = (itemId) => {
     router.push(`/edit/${itemId}`);
-  }
+  };
+
+  const handleView = async () => {
+    router.push('/dashboard');
+  };
 
   // If the page is still loading, display a loading message
   if (loading) {
     return <div>Loading...</div>;
   }
-  // Render the dashboard page with the user's email, a button to add a new item, and a grid view of items
+  // Render the dashboarde page with the user's email, a button to add a new item, and a grid view of items
   return <>
     <Head>
       <title>FloralFlow Dashboard</title>
@@ -71,7 +110,10 @@ const DashboardPage = () => {
     </Head>
     <Container className={`${styles.main} py-5`}>
       <Row className="justify-content-center">
-         
+      <div className={styles.chartContainer} style={{ width: '600px', height: '400px' }}>
+
+<ChartComponent type="bar" data={chartData} options={{}} />
+</div>
          <Table striped bordered hover>
             <thead>
               <tr>
@@ -80,7 +122,7 @@ const DashboardPage = () => {
                 <th>Quantity</th>
                 <th>Edit</th>
                 <th>Last Updated</th>
-                <th>Created At</th>
+                <th>Stock</th>
               </tr>
             </thead>
             <tbody>
@@ -95,7 +137,9 @@ const DashboardPage = () => {
                   >Edit</button></td>
                  {/*  <td><Link href={`/edit/${item.id}`}>Edit</Link></td> */}
                   <td>{item.updatedAt ? item.updatedAt.toLocaleString() : 'N/A'}</td>
-                  <td>{item.createdAt ? item.createdAt.toLocaleString() : 'N/A'}</td>
+                  <td>
+                 
+                  </td>
                 </tr>
               ))}
             </tbody>
