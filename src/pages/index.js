@@ -58,6 +58,11 @@ async function signIn(){
   await signInWithEmailAndPassword(getAuth(), email, password);
 }
 
+ // Signs-out
+function signOutUser(){
+  signOut(getAuth());
+}
+
 
 function HomePage() {
   const {user} = useUser();

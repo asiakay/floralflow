@@ -48,8 +48,8 @@ export default function Layout({ children }) {
  <Breadcrumb.Item href="/profile">{user.email}</Breadcrumb.Item>
  <Breadcrumb.Item href="/dashboard">View Items</Breadcrumb.Item>
  <Breadcrumb.Item href="/add">Add Item</Breadcrumb.Item>
-  <Breadcrumb.Item href="/logout">Logout</Breadcrumb.Item>
- 
+  <Breadcrumb.Item onClick={handleLogout} >Logout</Breadcrumb.Item>
+  
  </Breadcrumb>
  </>
 ) : (
