@@ -7,7 +7,9 @@ import AddItemForm from '../components/AddItemForm';
 import styles from '../styles/AddItemForm.module.css';
 import Link from 'next/link';
 
+
 const AddItemPage = () => {
+  
   const { user, loading, logout } = useUser();
   /* const router = useRouter();
 
@@ -28,17 +30,11 @@ const AddItemPage = () => {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.ico" />
   </Head>
-  <Container className={`${styles.main} py-5`}>     
-      <Row className="justify-content-center">
-        <Col xs={12} md={6} lg={4} className="text-center">
-        {/*   <Logo /> */}
+       {/*   <Logo /> */}
      
       <AddItemForm /> 
      
-      </Col>
-      </Row>
-    </Container>
-    
+  
     </>);
 };
 

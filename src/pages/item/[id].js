@@ -1,12 +1,12 @@
 // pages/item/[id].js
 // Import required modules
 
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import { firestore } from '../../lib/firebase';
 import { Timestamp } from 'firebase/firestore'; // import Timestamp
+import { useRouter } from 'next/router';
 
 import styles from '../../styles/EditItem.module.css';
 // Define a functional component called ItemPage
@@ -78,6 +78,16 @@ await updateDoc(itemDoc, updatedItemData);
             }
             };
 
+            const formatDate = (date) => {
+                return new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                }).format(date);
+              };
             // Render the ItemPage component
 
         return (
@@ -95,15 +105,24 @@ await updateDoc(itemDoc, updatedItemData);
                 <p>
             
             </p>
-            <p>Created: {item.createdAt ? item.updatedAt.toLocaleString() : 'N/A' } </p>
-            <p>Updated: {item.updatedAt ? item.updatedAt.toLocaleString() : 'N/A' }</p>
+            <p>Created: {item.createdAt ? formatDate(item.createdAt.toDate()) : 'N/A'}</p>
+            <p>Updated: {item.updatedAt ? formatDate(item.updatedAt.toDate()) : 'N/A'}</p>
 
 
 
 
 
- <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Delete</button> 
+ <button 
+ onClick={handleEdit}
+ className={`${styles.button}`}
+ >
+    Edit
+    </button>
+<button 
+onClick={handleDelete}
+className={`${styles.deletebutton}`}
+>Delete
+</button> 
                          </> 
     : // If the item does not exist, render a message
 

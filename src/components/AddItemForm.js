@@ -52,7 +52,10 @@ console.log('Item added!');
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className={`${styles.container}`}>
+      <h1>Add Item</h1>
+
+        <form onSubmit={handleSubmit} className={`${styles.form}`}>
            <label className={`${styles.label}`}>Name</label>
            <input   
            type="text"
@@ -79,22 +82,29 @@ console.log('Item added!');
                 onChange={(e) => setSupplier(e.target.value)}
                 /> */}
 
-               <label className={`${styles.label}`}>Units in Stock:</label>   
+               <label className={`${styles.label}`}>Quantity in Stock</label>   
                 <input
                 type="text"
                 placeholder="Quantity"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
                 />
-                 <label className={`${styles.label}`}>Image:</label>  
+{/*                  <label className={`${styles.label}`}>Image:</label>  
                  <input
                 type="text"
                 placeholder="Image URL"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                /><br></br>
-                <button type="submit" className={styles.input} >Add Item</button>
+                /> */}
+                <br></br>
+                <button 
+                type="submit" 
+                className={`${styles.input}`} 
+                >
+                    Add Item
+                    </button>
         </form>
+        </div>
     );
 };
     

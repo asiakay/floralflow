@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../contexts/UserContext';
 import { Container, Row, Col, ButtonGroup, Button, Table } from 'react-bootstrap';
-import Head from 'next/head'
+import Head from 'next/head';
 import Image from 'next/image';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styles from '../styles/Dashboard.module.css';
 
 const DashboardPage = () => {
   const { user, loading, logout } = useUser();
   const [items, setItems] = useState([]);
+  const router = useRouter(); // Initialize useRouter
 
-  // Fetch items from Firestore and store them in state when the component mounts:
   useEffect(() => {
     const fetchItems = async () => {
       const itemsCollection = collection(db, 'items');
@@ -31,22 +32,28 @@ const DashboardPage = () => {
       });
       setItems(itemsList);
     };
-    fetchItems();
-  }, []);
 
- /*  // If the user is not logged in, redirect them to the login page
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login');
-    
-    }
-  }, [loading, user]);
- */
+    // Refetch the items when the updatedAt query parameter changes
+    const handleRouteChange = (url, { shallow }) => {
+      if (router.asPath.startsWith('/dashboard') && !shallow) {
+        fetchItems();
+      }
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    fetchItems();
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router]);
+
   // If the page is still loading, display a loading message
   if (loading) {
     return <div>Loading...</div>;
   }
-
   // Render the dashboard page with the user's email, a button to add a new item, and a grid view of items
   return <>
     <Head>
