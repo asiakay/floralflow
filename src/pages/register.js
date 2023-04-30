@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import {auth, app, googleProvider, firebase, firestore } from '../lib/firebase';
+import {auth, googleProvider, db } from '../lib/firebase';
 import { useRouter } from 'next/router';
 import styles from '../styles/Register.module.css';
 import { addUserToFirestore } from '../lib/userUtils';
 //import firebase from '../lib/firebase/firebase';
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { getDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 //const auth = getAuth(app);
 const RegisterPage = () => {
@@ -14,28 +15,74 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+  const displayError = (message) => {
+    setError(message);
+    setTimeout(() => {
+      setError('');
+    }, 5000);
+  };
+
+  const handleUserRegister = async (user) => {
+    console.log('Handling user registration:', user);
+    const userDocRef = doc(db, 'users', user.uid);
+    const userDoc = await getDoc(userDocRef);
+    if (!userDoc.exists) {
     try {
-     await createUserWithEmailAndPassword(auth, email, password);
-      router.push('/dashboard');
+      await setDoc(userDocRef, {
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName,
+        photoURL: user.photoURL,
+        createdAt: serverTimestamp(),
+      });
+      console.log('User added to Firestore successfully.');
+
     } catch (error) {
-      setError(error.message);
+      console.error('Error adding user to Firestore:', error);
+
+      displayError(error.message);
+    } 
+  } else {
+      console.log('User already exists in Firestore.');
     }
   };
 
- 
- 
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = userCredential;
+      if (user) {
+        await handleUserRegister(user);
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      displayError(error.message);
+    }
+  };
+
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    const { user, error } = await signInWithPopup(auth, provider);
-    if (user !== null) {
-      router.push('/dashboard');
-    } else if (error) {
-      setError(error.message);
+    try {
+      const userCredential = await signInWithPopup(auth, provider);
+      const { user } = userCredential;
+      if (user) {
+        await handleUserRegister(user);
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      displayError(error.message);
     }
   };
+
+
+
+
+
+
+
 
 
 // Call addUserToFirestore when a user signs up or logs in:

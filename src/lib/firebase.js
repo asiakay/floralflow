@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getFirestore, Timestamp } from 'firebase/firestore';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 // import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -20,14 +21,18 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID 
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 const db = getFirestore(app);
 const firestore = getFirestore(app);
 
-const auth = getAuth(app);
+// Create a GoogleAuthProvider instance
+const googleProvider = new GoogleAuthProvider();
 
 
 //const analytics = getAnalytics(app);
 
-export { getAuth, onAuthStateChanged, db, firestore, auth, Timestamp };
+export { firestore, db, getAuth, auth, Timestamp, googleProvider, signOut, onAuthStateChanged };

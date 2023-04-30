@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-// import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-//import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithGoogle } from '../lib/auth';
-import { signInWithEmailAndPassword } from '../lib/auth';
-
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import styles from '../styles/Login.module.css';
-import { auth, app, googleProvider } from '../lib/firebase';
+import { auth, db } from '../lib/firebase';
+import { getDoc, doc } from 'firebase/firestore';
 import { addUserToFirestore } from '../lib/userUtils';
-import { firebase } from '../lib/userUtils';
-
-//const auth = getAuth(app);
+import Dashboard from './dashboard';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -23,7 +18,7 @@ function LoginPage() {
   const router = useRouter();
 
   const handleUserLogin = async (user) => {
-    const userDoc = await firebase.firestore.collection('users').doc(user.uid).get();
+    const userDoc = await db.collection('users').doc(user.uid).get();
     if (!userDoc.exists) {
       await addUserToFirestore(user);
     }
@@ -32,29 +27,32 @@ function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const { user, error } = await signInWithEmailAndPassword(email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const { user } = userCredential;
       if (user) {
+        await handleUserLogin(user);
         router.push('/dashboard');
-      } else if (error) {
-        setError(error.message);
       }
     } catch (error) {
       setError(error.message);
     }
   };
 
-
-
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    const { user, error } = await signInWithPopup(auth, provider);
-    if (user !== null) {
-      router.push('/dashboard');
-    } else if (error) {
+    try {
+      const userCredential = await signInWithPopup(auth, provider);
+      const { user } = userCredential;
+      if (user) {
+        await handleUserLogin(user);
+        router.push('/dashboard');
+      }
+    } catch (error) {
       setError(error.message);
     }
   };
+
 
   return (
     <Container className={`${styles.main} py-5`}>

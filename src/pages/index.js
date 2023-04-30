@@ -36,7 +36,6 @@ import {
   import { getFirebaseConfig } from '../lib/firebase';
 
 
-
 import React, { useState } from 'react';
 import { Container, Row, Col, ButtonGroup, /* Button */ } from 'react-bootstrap';
 import Button from '@mui/material/Button';
@@ -53,15 +52,33 @@ import Link from 'next/link';
  // Signs-in.
 
 async function signIn(){
-  var provider = new GoogleAuthProvider();
-  await signInWithPopup(getAuth(), provider);
-  await signInWithEmailAndPassword(getAuth(), email, password);
+  router.push('/dashboard')
+ /*  var provider = new GoogleAuthProvider();
+  try {
+    await signInWithPopup(getAuth(), provider);
+    await signInWithEmailAndPassword(getAuth(), email, password);
+
+  } catch (error) {
+    if (error.code === 'auth/popup-closed-by-user'){
+      console.log('User closed the popup before completing the sign-in process.');
+    } else {
+      console.log(error);
+    }
+  } */
+/*   await signInWithEmailAndPassword(getAuth(), email, password);
+ */
 }
 
  // Signs-out
-function signOutUser(){
+ function signOutUser(){
   signOut(getAuth());
 }
+
+// init firebase
+function initFirebaseAuth(){
+  onAuthStateChanged(getAuth(), authStateObserver);
+}
+
 
 
 function HomePage() {
@@ -71,20 +88,35 @@ function HomePage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  //const router = useRouter();
+
+
+
+  function LoginButton() {
+    const router = useRouter();
+  
+    function handleClick() {
+      router.push('/login');
+    }
+    return (
+      <button onClick={handleClick} className={`${styles.button}`}>
+        Login
+      </button>
+    );
+  }
+
+function RegisterButton() {
   const router = useRouter();
 
-
-
-
-
-
-
-
-
-
-
-
-  
+  function handleClick() {
+    router.push('/register');
+  }
+  return (
+    <button onClick={handleClick} className={`${styles.button}`}>
+      Register
+    </button>
+  );
+}
 
 /*   const handleLogin = async (e) => {
     e.preventDefault();
@@ -167,10 +199,13 @@ Please enter your email and password to access your account.          </p>
 <Button href="https://floral487.gitbook.io/floral-clerk-manual/">Floral Clerk Manual</Button>
 
      ) : (
-        <ButtonGroup>
-  <Button onClick={signIn}  className={`${styles.input}`}>Login</Button>
-  <Button onClick={signIn}  className={`${styles.input}`}>Register</Button>
-</ButtonGroup>       
+        <div>
+      <LoginButton />
+<RegisterButton />
+  <button 
+  onClick={signIn}  
+  className={`${styles.button}`}>Register</button>
+</div>       
   )}
     </Col>
      </Row>

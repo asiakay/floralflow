@@ -76,11 +76,13 @@
 }
 
 .btninput[type="submit"] {
+  background-color: #4caf50;
   width: 100%;
   padding: 10px;
   font-size: 16px;
   margin: 8px 0;
   box-sizing: border-box;
+  border-radius: 4px;
 }
 
 .label {

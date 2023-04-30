@@ -78,6 +78,10 @@ await updateDoc(itemDoc, updatedItemData);
             }
             };
 
+            const handleView = async () => {
+                router.push('/dashboard');
+            }
+
             const formatDate = (date) => {
                 return new Intl.DateTimeFormat('en-US', {
                   year: 'numeric',
@@ -117,6 +121,12 @@ await updateDoc(itemDoc, updatedItemData);
  className={`${styles.button}`}
  >
     Edit
+    </button>
+    <button 
+ onClick={handleView}
+ className={`${styles.viewbutton}`}
+ >
+    View Items
     </button>
 <button 
 onClick={handleDelete}

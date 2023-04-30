@@ -99,7 +99,7 @@ console.log('Item added!');
                 <br></br>
                 <button 
                 type="submit" 
-                className={`${styles.input}`} 
+                className={`${styles.btninput}`} 
                 >
                     Add Item
                     </button>

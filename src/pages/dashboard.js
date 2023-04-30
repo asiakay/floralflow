@@ -44,11 +44,18 @@ const DashboardPage = () => {
 
     fetchItems();
 
+    const handleView = async () => {
+      router.push('/dashboard');
+  }
     // Clean up the event listener when the component is unmounted
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
   }, [router]);
+
+  const handleEdit = (itemId) => {
+    router.push(`/edit/${itemId}`);
+  }
 
   // If the page is still loading, display a loading message
   if (loading) {
@@ -82,7 +89,11 @@ const DashboardPage = () => {
                   <td><Link href={`/item/${item.id}`}>{item.name}</Link></td>
                   <td>{item.description}</td>
                   <td>{item.quantity}</td>
-                  <td><Link href={`/edit/${item.id}`}>Edit</Link></td>
+                  <td><button
+                  onClick={() => handleEdit(item.id)}
+                  className={`${styles.button}`}
+                  >Edit</button></td>
+                 {/*  <td><Link href={`/edit/${item.id}`}>Edit</Link></td> */}
                   <td>{item.updatedAt ? item.updatedAt.toLocaleString() : 'N/A'}</td>
                   <td>{item.createdAt ? item.createdAt.toLocaleString() : 'N/A'}</td>
                 </tr>
