@@ -76,20 +76,26 @@ const DashboardPage = () => { // Define the DashboardPage component
           updatedAt: doc.data().updatedAt && doc.data().updatedAt.toDate ? doc.data().updatedAt.toDate() : null, // Set the updatedAt to the document updatedAt
         }; // End of the item object
       }); // End of the map function
-      setItems(itemsList); // Set the items state to the itemsList array
+
+      const colors = randomColor({ // Generate an array of colors
+        count: itemsList.length, // Set the number of colors to the number of items
+        luminosity: 'light', // Set the luminosity to light
+        format: 'rgba', // Set the format to rgba
+        alpha: 0.5, // Set the alpha to 0.5
+      }); // End of the colors array
+
+      const itemsListWithColors = itemsList.map((item, index) => ({ // Map the itemsList array to add a color to each item
+        ...item, // Spread the item object
+        backgroundColor: colors[index], // Set the backgroundColor to the color at the current index
+      })); // End of the map function
+
+      setItems(itemsListWithColors); // Set the items state to the itemsList array
 
       // Calculate total quantity of all items
       const totalQuantity = itemsList.reduce((total, item) => { // Calculate the total quantity of all items
         return total + item.quantity; // Add the item quantity to the total
       }, 0); // Start the total at 0
 
-          // Generate an array of colors for each item
-const colors = randomColor({ // Generate an array of colors
-  count: itemsList.length, // Set the number of colors to the number of items
-  luminosity: 'light', // Set the luminosity to light
-  format: 'rgba', // Set the format to rgba
-  alpha: 0.5, // Set the alpha to 0.5
-}); // End of the colors array
 
       // set chart data
       setChartData({ // Set the chartData state
@@ -171,7 +177,10 @@ const colors = randomColor({ // Generate an array of colors
             </thead> {/* End of the table header */}
             <tbody> {/* Start the table body */}
               {items.map(item => ( // Map through the items
-                <tr key={item.id}> {/* Start the table row */}
+                <tr // Start the table row
+                key={item.id} // Set the table row key
+                style={{ backgroundColor: item.backgroundColor }} // Set the table row background color
+                >   {/* Set the table row style */}
                   <td><Link href={`/item/${item.id}`}>{item.name}</Link></td> {/* Set the table data */}
                   <td>{item.description}</td> {/* Set the table data */}
                   <td>{item.quantity}</td> {/* Set the table data */}
