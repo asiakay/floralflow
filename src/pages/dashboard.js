@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from '../styles/Dashboard.module.css';
 import Chart from 'chart.js/auto';
+import randomColor from 'randomcolor';
 
 const ChartComponent = ({ type, data, options, width, height }) => {
   const chartRef = useRef(null); // Reference to the canvas element
@@ -82,13 +83,21 @@ const DashboardPage = () => { // Define the DashboardPage component
         return total + item.quantity; // Add the item quantity to the total
       }, 0); // Start the total at 0
 
+          // Generate an array of colors for each item
+const colors = randomColor({ // Generate an array of colors
+  count: itemsList.length, // Set the number of colors to the number of items
+  luminosity: 'light', // Set the luminosity to light
+  format: 'rgba', // Set the format to rgba
+  alpha: 0.5, // Set the alpha to 0.5
+}); // End of the colors array
+
       // set chart data
       setChartData({ // Set the chartData state
         labels: itemsList.map(item => item.name), // Set the chart labels to the item names
         datasets: [{ // Set the chart datasets
           label: 'Quantity', // Set the dataset label
           data: itemsList.map(item => item.quantity), // Set the dataset data to the item quantities
-          backgroundColor: 'rgba(255, 99, 132, 0.2)', // Set the dataset background color
+          backgroundColor: colors, // Set the dataset background color
           borderColor: 'rgba(255, 99, 132, 1)', // Set the dataset border color
           borderWidth: 1, // Set the dataset border width
         }], // End of the chart datasets
