@@ -10,15 +10,36 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Dashboard.module.css';
 import Chart from 'chart.js/auto';
 
-const ChartComponent = ({ type, data, options }) => {
+const ChartComponent = ({ type, data, options, width, height }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    if (chartRef.current) {
-      const chart = new Chart(chartRef.current, {
-        type,
-        data,
-        options,
+    if (chartRef.current) { // Check if the chartRef is not null
+      const chart = new Chart(chartRef.current, { // Create the chart
+        type, // Set the chart type
+        data, // Set the chart data
+        options: {// Set the chart options
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Quantity in Stock',
+                color: '#000000',
+      
+              },
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Item Name',
+                color: '#000000',
+              },
+            },
+          },
+        },
       });
 
       return () => {
@@ -27,7 +48,7 @@ const ChartComponent = ({ type, data, options }) => {
     }
   }, [type, data, options]);
 
-  return <canvas ref={chartRef} />;
+  return <canvas ref={chartRef} width={width} height={height}/>;
 };
 
 const DashboardPage = () => {
@@ -110,10 +131,14 @@ const DashboardPage = () => {
     </Head>
     <Container className={`${styles.main} py-5`}>
       <Row className="justify-content-center">
-      <div className={styles.chartContainer} style={{ width: '600px', height: '400px' }}>
+      {chartData && (
+              <div className={styles.chartContainer} >
+                <ChartComponent type="bar" data={chartData} options={{}} />
+              </div>
+            )}
+      </Row>
+      <Row className="justify-content-center">
 
-<ChartComponent type="bar" data={chartData} options={{}} />
-</div>
          <Table striped bordered hover>
             <thead>
               <tr>
