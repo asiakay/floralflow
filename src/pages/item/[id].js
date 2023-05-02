@@ -7,7 +7,7 @@ import { db } from '../../lib/firebase';
 import { firestore } from '../../lib/firebase';
 import { Timestamp } from 'firebase/firestore'; // import Timestamp
 import { useRouter } from 'next/router';
-
+import Image from 'next/image';
 import styles from '../../styles/EditItem.module.css';
 // Define a functional component called ItemPage
 
@@ -25,7 +25,6 @@ const ItemPage = () => {
 // Use the useEffect hook to fetch the item data when the component mounts or the id parameter changes
 
     useEffect(() => {
-
         const fetchItem = async () => {
             if (id) {
             // Create a document reference to the item document in the Firestore database
@@ -40,6 +39,8 @@ const ItemPage = () => {
 
                 if (itemSnaphot.exists()) {
                     setItem({id: itemSnaphot.id, ...itemSnaphot.data()});
+                    console.log(itemSnaphot.data().imageUrl);
+
                     setUpdatedItem({id:itemSnaphot.id, ...itemSnaphot.data()});
 
                     console.log(itemSnaphot.data());
@@ -93,7 +94,7 @@ await updateDoc(itemDoc, updatedItemData);
                 }).format(date);
               };
             // Render the ItemPage component
-
+            //
         return (
         
             <div className={styles.container}>
@@ -103,10 +104,16 @@ await updateDoc(itemDoc, updatedItemData);
                 <> 
                   
                 <h2>{item.name}</h2>
+                       <Image src={item?.imageUrl} 
+                       alt={item?.name} 
+                       width={500}
+                       height={500}
+                        /> 
+                  
                 <p>Description: {item.description}</p>
                 <p>Supplier: {item.supplier}</p>
-                <p>Quantity in stock: {item.quantity}</p>
-                <p>
+                <p>Quantity in stock: {item.quantity}</p >
+               <p>
             
             </p>
             <p>Created: {item.createdAt ? formatDate(item.createdAt.toDate()) : 'N/A'}</p>
@@ -146,3 +153,5 @@ className={`${styles.deletebutton}`}
 // Export the ItemPage component as the default export of the module
 
     export default ItemPage;
+
+
