@@ -1,50 +1,89 @@
 import React, { useEffect, useRef } from 'react'; // Import React, useEffect and useRef
-import Chart from 'chart.js/auto'; // Import chart.js
+// import Chart from 'chart.js/auto'; // Import chart.js
+// import styles from '../styles/Chart.module.css'; // Import the Dashboard.module.css filee
+// import { Chart } from 'react-chartjs-2';
+/* 
+const ChartComponent = ({ type, data, options }) => {
+      const chartRef = useRef(null); // Reference to the canvas element
 
-
-const ChartComponent = ({ type, data, options, width, height }) => {
-    const chartRef = useRef(null); // Reference to the canvas element
-  
     useEffect(() => {
-      if (chartRef.current) { // Check if the chartRef is not null
-        const chart = new Chart(chartRef.current, { // Create the chart
-          type, // Set the chart type
-          data, // Set the chart data
-          options: {// Set the chart options
-            responsive: true, // Make the chart responsive
-            maintainAspectRatio: false, // Don't maintain the aspect ratio
-            indexAxis: 'y', // Set the index axis to the y axis
-            scales: { // Configure the scales
-              x: { // Configure the x axis
-                title: { // Configure the x axis title
-                  display: true, // Show the title
-                  text: 'Quantity in Stock', // Set the title text
-                  color: '#000000', // Set the title color
-                }, // End of the x axis title configuration section
-              }, // End of the x axis configuration section
-              y: { // Configure the y axis
-                title: { // Configure the y axis title
-                  display: true, // Show the title
-                  text: 'Item Name', // Set the title text
-                  color: '#000000', // Set the title color
-                }, // End of the y axis title configuration section
-              }, // End of the y axis configuration section
-            }, // End of the scales configuration section
-          }, // End of the chart options
-        }); // End of the chart creation
-  
-        return () => { // This is the cleanup function
-          chart.destroy(); // Destroy the chart before unmounting
-        }; // End of the cleanup function
-      } // End of the if statement
-    }, [type, data, options]); // End of the useEffect dependencies array
-  
-    return <canvas 
-    ref={chartRef} // Pass the chartRef to the canvas element
-    width={width}  // Set the canvas width
-    height={height} // Set the canvas height
-    />; // End of the canvas element
-  }; // End of the ChartComponent function
-  
-  
-    export default ChartComponent; // Export the ChartComponent component
+        let chart = null;
+
+        try {
+            if (chartRef.current) {
+              chart = new Chart(chartRef.current, {
+                type,
+                data,
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  indexAxis: 'y',
+                  scales: {
+                    x: {
+                      title: {
+                        display: true,
+                        text: 'Quantity in Stock',
+                        color: '#000000',
+                        font: {
+                          size: 16,
+                        },
+                      },
+                      ticks: {
+                        font: {
+                          size: 14,
+                        },
+                      },
+                    },
+                    y: {
+                      title: {
+                        display: true,
+                        text: 'Item Name',
+                        color: '#000000',
+                        font: {
+                          size: 16,
+                        },
+                      },
+                      ticks: {
+                        font: {
+                          size: 14,
+                        },
+                      },
+                    },
+                  },
+                  plugins: {
+                    legend: {
+                      display: true,
+                      position: 'bottom',
+                      labels: {
+                        color: '#000000',
+                      },
+                    },
+                  },
+                },
+              });
+            }
+          } catch (error) {
+            console.error('Error creating chart:', error);
+          }
+          
+              return () => {
+                if (chart) {
+                  chart.destroy();
+                }
+              };
+            }, [type, data, options]);
+          
+            return (
+                <div >
+                  <canvas 
+                  ref={chartRef} 
+                 
+                  />
+                </div>
+              );
+          };
+          
+          export default ChartComponent; */
+
+// className={`${styles.button}`}eeeeeeeeeeeeeeeee
+          //eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee

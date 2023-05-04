@@ -27,7 +27,9 @@
     "next": "13.3.0",
     "randomcolor": "^0.6.2",
     "react-bootstrap": "^2.7.4",
-    "react-dom": "18.2.0"
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "18.2.0",
+    "react-google-charts": "^4.0.0"
   },
   "description": "## MVP Roadmap",
   "main": "next.config.js",
